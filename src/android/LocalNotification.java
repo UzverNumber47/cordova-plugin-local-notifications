@@ -290,7 +290,13 @@ public class LocalNotification extends CordovaPlugin {
         
         CallbackContext callbackContext = CallbackContextUtil.getCallbackContext(requestCode);
 
-        if (callbackContext != null) successBoolean(callbackContext, grantResults[0] == PackageManager.PERMISSION_GRANTED);
+        Boolean granted = false;
+
+        if (grantResults.length > 0) {
+            granted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+        }
+
+        if (callbackContext != null) successBoolean(callbackContext, granted);
 
         // Remove the saved context
         CallbackContextUtil.clearContext(requestCode);
